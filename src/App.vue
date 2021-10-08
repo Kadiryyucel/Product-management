@@ -1,11 +1,19 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <navigation >
+    <router-view />
+  </navigation>
 </template>
 
+<script>
+import Navigation from "./views/Navigation.vue";
+
+export default {
+  components: { Navigation },
+  setup() {
+    
+  },
+};
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -26,5 +34,8 @@
       color: #42b983;
     }
   }
+}
+.el-overlay{
+  background-color: transparent !important;
 }
 </style>
