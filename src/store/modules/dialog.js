@@ -1,4 +1,5 @@
-import { ElMessageBox, ElMessage } from 'element-plus'
+import {  ElMessage } from 'element-plus'
+import {h} from "vue"
 export default {
     state: {
         content: []
@@ -15,33 +16,21 @@ export default {
         show({commit},o){
             show({commit},o)
         },
-        permission({commit}, title) {
-            title = title || 'dikkat';
-            show(commit, {
-                title: title,
-                template: `<el-button type="text" @click="open">Click to open the Message Box</el-button>`,
+        permission({commit}) {
+            show({commit}, {
                 openMessageBox: function () {
-                    ElMessageBox.confirm(
-                        'proxy will permanently delete the file. Continue?',
-                        'Warning',
-                        {
-                            confirmButtonText: 'OK',
-                            cancelButtonText: 'Cancel',
-                            type: 'warning',
-                        }
-                    )
-                        .then(() => {
-                            ElMessage({
-                                type: 'success',
-                                message: 'Delete completed',
-                            })
+                      const openVn = () => {
+                        ElMessage({
+                          message: h('p', null, [
+                            h('span', null, 'Message can be '),
+                            h('i', { style: 'color: teal' }, 'VNode'),
+                          ]),
                         })
-                        .catch(() => {
-                            ElMessage({
-                                type: 'info',
-                                message: 'Delete canceled',
-                            })
-                        })
+                      }
+                  
+                      return {
+                        openVn,
+                      }
                 }
             })
         }
@@ -49,18 +38,21 @@ export default {
 }
 
 function show({ commit }, o) {
-    o.active = true;
-
+    console.log("mer")
     Object.defineProperty(o, "active", {
         get(){
-            return o._active || true;
+            return true;
         },
         set(newValue){
-            o._active = newValue;
-            if (o._active == false) {
+            o.activee = newValue;
+            if (o.active == false) {
                 commit("remove", o)
             }
         }
-    })
-    new
+    });
+    o.close = function(){
+        o.active = false;
+        return
+    }
+    if(o.active) commit("new",o)
 }
