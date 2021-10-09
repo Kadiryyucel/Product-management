@@ -2,13 +2,14 @@
   <navigation >
     <router-view />
   </navigation>
+  <ialog></ialog>
 </template>
 
 <script>
 import Navigation from "./views/Navigation.vue";
 
 export default {
-  components: { Navigation },
+  components: { Navigation},
   setup() {
     
   },

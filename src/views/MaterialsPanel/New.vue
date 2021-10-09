@@ -32,6 +32,8 @@ export default defineComponent({
         store.commit("addMaterialName", o.value.name);
         return true;
       }
+      
+      store.dispatch("permission");
       return false;
     }
 
