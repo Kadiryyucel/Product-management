@@ -2,7 +2,7 @@
   <navigation >
     <router-view />
   </navigation>
-  <ialog></ialog>
+  <Y-dialog></Y-dialog>
 </template>
 
 <script>
