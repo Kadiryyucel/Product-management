@@ -1,42 +1,40 @@
 <template>
-  <materials :model="o"><option-menu :save="save"></option-menu></materials>
+  <materials v-model:modelValue="o"><option-menu :save="save"></option-menu></materials>
 </template>
 
 <script>
 import materials from "./Materials.vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { computed, reactive } from "vue";
+import { ref } from "vue";
 
-import {onMounted,toRefs} from "vue"
+
 import {Validator} from "../../utilty/Validator";
 export default {
   components: { materials: materials },
   setup() {
     let store = useStore();
     let router = useRoute();
-   
-    let materials = computed(() => store.state.materialsFormation.materials);
-    let o = reactive({});
-    function selectedMaterialsId() {
-      materials.value.forEach((material) => {
-        if (material.id === router.params.id) {
-          o.value = material;
-          return;
-        }
-      });
-    }
-    onMounted(()=>{selectedMaterialsId()});
 
-    function save() {
-      let check = Validator(o);
+    let o = ref(JSON.parse(router.params.row));
+
+    async function save() {
+      let check = Validator(o.value);
+      console.log(check)
       if (check) {
-        store.commit("editMaterial", {model:o,id:router.params.id});
+        try{
+          store.commit("editMaterial", {model:o.value,index:router.params.index});
+        }
+        catch(e){
+          console.error(e)
+          return false;
+        }
+        return true;
       }
-      return
+      return false;
     }
     return {
-      ...toRefs(o),
+      o,
       save
     };
   },

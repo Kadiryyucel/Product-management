@@ -15,11 +15,17 @@ export default {
         deleteMaterial(state, i) {
             state.materials.splice(i, 1);
         },
-        editMaterial(state, { model, id }) {
+        editMaterial(state, { model, index }) {
             let materials = state.materials;
-            let targetIndex = state.materials.findIndex((material)=>material.id === id);
+            let targetIndex = index;
+            if(targetIndex === -1) {throw 'Değiştirilmek istenen metarial bulunamadı'}
             materials[targetIndex] = model;
 
+        },
+        removeMaterial(state, index){
+            let materials = state.materials;
+            let targetIndex = index;
+            materials.splice(targetIndex,1);
         }
     }
 }

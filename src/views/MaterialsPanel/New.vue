@@ -43,54 +43,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.noActive {
-  display: none;
-}
-.active {
-  display: flex;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: black;
-  opacity: 0.5;
-  z-index: 5;
-}
-li {
-  cursor: pointer;
-  padding: 4px 16px;
-  &:hover {
-    background-color: rgb(209, 208, 208);
-  }
-}
-.deleteMaterial {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.ico {
-  cursor: pointer;
-  &:hover {
-    transform: scale(0.9);
-  }
-}
-.addButton {
-  margin-right: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 100px;
-  flex-shrink: 0;
-  &:hover {
-    transform: scale(0.9);
-  }
-}
+
 .error {
   color: rgb(214, 2, 2);
 }
