@@ -1,6 +1,11 @@
 <template>
   <div class="page-container" style="height: 100%">
-    <el-page-header content="detail" ref="header" />
+    <el-page-header
+      icon="el-icon-arrow-left"
+      :content="title"
+      ref="header"
+      @back="back()"
+    />
     <div style="height: 100%; margin: 10px">
       <el-drawer v-model="drawer" direction="ltr">
         <ul style="list-style-type: none; padding: 0px">
@@ -72,9 +77,9 @@ export default {
         ],
       },
     ]);
-
+    
     const { menuVisible, toggleMenu } = drawerMenu();
-    const { routerUrl, openInnerDrawer, innerDrawerContext, innerDrawer } =
+    const { routerUrl, openInnerDrawer, innerDrawerContext, innerDrawer, title } =
       InnerDrawerMenu();
 
     let drawer = ref(false);
@@ -101,7 +106,12 @@ export default {
       });
     });
 
+    function back() {
+      router.back();
+    }
     return {
+      title,
+      back,
       toggleMask,
       routerUrl,
       openInnerDrawer,
@@ -115,8 +125,10 @@ export default {
     function InnerDrawerMenu() {
       let innerDrawerContext = ref([]);
       let innerDrawer = ref(false);
+      let title = ref("Home")
       function routerUrl(item) {
         router.push({ name: item.to });
+        title.value = item.text
       }
       function openInnerDrawer(menuChild) {
         innerDrawer.value = !innerDrawer.value;
@@ -124,6 +136,7 @@ export default {
         toggleMask.value = !toggleMask.value;
       }
       return {
+        title,
         routerUrl,
         openInnerDrawer,
         innerDrawerContext,
@@ -146,6 +159,9 @@ function drawerMenu() {
 <style lang="scss">
 :root {
   --color-header-border: rgb(179, 177, 177);
+}
+li {
+  padding: 0px !important;
 }
 .el-page-header {
   border-bottom: 5px solid var(--color-header-border);
@@ -198,7 +214,7 @@ body > .el-overlay {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 10px !important;
   cursor: pointer;
   font-family: Arial, Helvetica, sans-serif;
   &:hover {
