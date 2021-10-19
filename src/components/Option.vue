@@ -28,16 +28,17 @@
 <script>
 import { defineComponent, ref, watch, onMounted } from "vue";
 import {useRouter} from "vue-router"
+import {useStore} from "vuex"
+
 export default defineComponent({
   props: { save: Function, cencel: Function, remove: Function },
   setup() {
+    let store = useStore();
+    let router = useRouter();
     let state = ref("done");
-
     onMounted(() => {
-      let router = useRouter();
       router.afterEach((to, from) => {
-        console.log(from.fullPath !== router.currentRoute.value.fullPath)
-        if (from.fullPath !== router.currentRoute.value.fullPath) {
+        if (from.fullPath !== to.fullPath) {
           state.value = "rest";
         }
       });
@@ -48,9 +49,11 @@ export default defineComponent({
       if (checkRecord) {
         setTimeout(() => {
           state.value = "done";
+          store.dispatch("informing",{content:"Kayıt işlemi başarıyla gerçekleşti"});
         }, 200);
       } else if (!checkRecord) {
         state.value = "error";
+        store.dispatch("informing",{content:"Kayıt işlemi gerçekleşmedi",title:"Dikkat ",color:"red"});
       }
     }
 

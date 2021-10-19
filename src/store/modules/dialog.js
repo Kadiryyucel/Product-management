@@ -16,21 +16,18 @@ export default {
         show({commit},o){
             show({commit},o)
         },
-        permission({commit}) {
+        informing({commit},{content,title,color="teal"}) {
             show({commit}, {
                 openMessageBox: function () {
                       const openVn = () => {
                         ElMessage({
                           message: h('p', null, [
-                            h('span', null, 'Message can be '),
-                            h('i', { style: 'color: teal' }, 'VNode'),
+                            h('i', { style: `color:${color}` }, title || ""),
+                            h('span', null, content),
                           ]),
                         })
                       }
-                  
-                      return {
-                        openVn,
-                      }
+                      return openVn
                 }
             })
         }
@@ -38,7 +35,7 @@ export default {
 }
 
 function show({ commit }, o) {
-    console.log("mer")
+
     Object.defineProperty(o, "active", {
         get(){
             return true;
@@ -54,5 +51,6 @@ function show({ commit }, o) {
         o.active = false;
         return
     }
+
     if(o.active) commit("new",o)
 }

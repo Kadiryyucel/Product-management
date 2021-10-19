@@ -35,7 +35,6 @@ export function Validator(model) {
     let validate = errorsValidators(scheme, model);
     let check = haveErrorSpan();
     if (!validate.isValid && !check) {
-
         showError(validate.error);
         return false;
     }
@@ -49,10 +48,8 @@ function errorsValidators(scheme, model) {
 
 function showError(errors = {}) {
     let keys = Object.keys(errors);
-
     keys.forEach((key) => {
         let el = document.querySelector(`.el-input__inner[${key}]`);
-
         let content = el.value;
         focusAndRemove(el);
         if (content == false || null) {
@@ -80,7 +77,7 @@ export function focusAndRemove(targetErrorEl) {
             if (errorsSpan == null || undefined || "") {
                 continue;
             }
-            bool ? errorsSpan.remove() : false;
+            !bool ? errorsSpan.remove() : false;
         }
 
     });
